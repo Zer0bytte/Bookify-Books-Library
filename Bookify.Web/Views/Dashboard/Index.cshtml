@@ -1,0 +1,250 @@
+﻿@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<!--begin::Toolbar-->
+<div class="toolbar mb-5 mb-lg-7" id="kt_toolbar">
+
+
+    <!--begin::Page title-->
+    <div class="page-title d-flex flex-column me-3">
+        <!--begin::Title-->
+        <h1 class="d-flex text-dark fw-bold my-1 fs-3">
+            Dashboard
+        </h1>
+        <!--end::Title-->
+    </div>
+    <!--end::Page title-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Row-->
+<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+    <!--begin::Col-->
+    <div class="col">
+        <!--begin::Engage widget 6-->
+        <div class="card flex-grow-1 bgi-no-repeat bgi-size-contain bgi-position-x-end h-xl-100"
+             style="background-color:#020202;background-image:url('/assets/images/books-bg.webp'); background-size:cover">
+            <!--begin::Body-->
+            <div class="card-body d-flex justify-content-between flex-column ps-xl-18">
+                <!--begin::Heading-->
+                <div class="mb-20 p-8 glass w-fit-content">
+                    <!--begin::Title-->
+                    <h3 class="fw-bold text-white fs-4x mb-5 ms-n1 custom-header">Bookify</h3>
+                    <!--end::Title-->
+                    <!--begin::Description-->
+                    <span class="fw-bold text-white fs-4 mb-8 d-block lh-0">Books are the best friend you will never meet!</span>
+                    <!--end::Description-->
+                    <!--begin::Items-->
+                    <div class="d-flex align-items-center">
+                        <!--begin::Item-->
+                        <div class="d-flex align-items-center me-6">
+                            <!--begin::Icon-->
+                            <i class="las la-book-reader text-white fs-3 me-2"></i>
+                            <!--end::Icon-->
+                            <!--begin::Info-->
+                            <span class="fw-semibold text-white fs-6">@Model.NumberOfCopies+ books</span>
+                            <!--end::Info-->
+                        </div>
+                        <!--end::Item-->
+                        <!--begin::Item-->
+                        <div class="d-flex align-items-center">
+                            <i class="las la-user-friends text-white fs-3 me-2"></i>
+                            <!--begin::Info-->
+                            <span class="fw-semibold text-white fs-6">@Model.NumberOfSubscribers subscribers</span>
+                            <!--end::Info-->
+                        </div>
+                        <!--end::Item-->
+                    </div>
+                    <!--end::Items-->
+                </div>
+                <!--end::Heading-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Engage widget 6-->
+
+    </div>
+    <!--end::Col-->
+</div>
+<!--end::Row-->
+<!--begin::Row-->
+<div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+    <!--begin::Col-->
+    <div class="col-xl-8">
+        <!--begin::Player widget 1-->
+        <div class="card card-flush h-xl-100">
+            <!--begin::Header-->
+            <div class="card-header pt-7">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-dark">Recently Added Books</span>
+                </h3>
+                <!--end::Title-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Card body-->
+            <div class="card-body pt-7">
+                <!--begin::Row-->
+                <div class="row g-5 g-xl-9 mb-5 mb-xl-9">
+                    @foreach (var book in Model.LastAddedBooks)
+                    {
+                        <!--begin::Col-->
+                        <div class="col-sm-3 mb-3 mb-sm-0">
+                            <!--begin::Player card-->
+                            <div class="m-0">
+                                <!--begin::User pic-->
+                                <div class="card-rounded position-relative mb-5">
+                                    <!--begin::Img-->
+                                    <div class="bgi-position-center bgi-no-repeat bgi-size-cover h-200px card-rounded"
+                                         style="background-image:url('@book.ImageThumbnailUrl')">
+                                    </div>
+                                    <!--end::Img-->
+                                </div>
+                                <!--end::User pic-->
+                                <!--begin::Info-->
+                                <div class="m-0">
+                                    <!--begin::Title-->
+                                    <h5 class="text-gray-800 text-hover-primary fs-3 fw-bold d-block mb-2">@book.Title</h5>
+                                    <!--end::Title-->
+
+                                    <span class="fw-bold fs-6 text-gray-400 d-block lh-1">@book.Author</span>
+                                </div>
+                                <!--end::Info-->
+                            </div>
+                            <!--end::Player card-->
+                        </div>
+                        <!--end::Col-->
+                    }
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Player widget 1-->
+
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xl-4">
+
+        <!--begin::List widget 24-->
+        <div class="card h-xl-100" id="kt_list_widget_24">
+            <!--begin::Header-->
+            <div class="card-header border-0 pt-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-800">Top Books</span>
+                </h3>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-6">
+                @foreach (var book in Model.TopBooks)
+                {
+                    <!--begin::Item-->
+                    <div class="d-flex flex-stack">
+                        <!--begin::Symbol-->
+                        <div class="symbol symbol-60px me-4">
+                            <img src="@book.ImageThumbnailUrl" class="" alt="" />
+                        </div>
+                        <!--end::Symbol-->
+                        <!--begin::Section-->
+                        <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                            <!--begin:Author-->
+                            <div class="flex-grow-1 me-2">
+                                <h5 class="text-gray-800 text-hover-primary fs-5 fw-bolder">@book.Title</h5>
+                                <span class="text-gray-400 fw-semibold d-block fs-6">@book.Author</span>
+                            </div>
+                            <!--end:Author-->
+                        </div>
+                        <!--end::Section-->
+                    </div>
+                    <!--end::Item-->
+                    @if (book != Model.TopBooks.Last())
+                    {
+                        <!--begin::Separator-->
+                        <div class="separator separator-dashed my-5"></div>
+                        <!--end::Separator-->
+                    }
+                }
+
+
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::List widget 24-->
+    </div>
+    <!--end::Col-->
+</div>
+<!--end::Row-->
+<!--begin::Row-->
+<div class="row g-5 g-xl-10">
+    <!--begin::Col-->
+    <div class="col-xl-8">
+
+        <!--begin::Table widget 13-->
+        <div class="card card-flush h-xl-100">
+            <!--begin::Header-->
+            <div class="card-header pt-7">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold text-gray-800">Rentals</span>
+                    <span class="text-gray-400 mt-1 fw-semibold fs-6">Per Day</span>
+                </h3>
+                <!--end::Title-->
+                <!--begin::Toolbar-->
+                <div class="card-toolbar">
+                    <div data-kt-daterangepicker="true" data-kt-daterangepicker-opens="left" class="btn btn-sm btn-light d-flex align-items-center px-4">
+                        <!--begin::Display range-->
+                        <div id="DateRange" class="text-gray-600 fw-bold">
+                            Loading date range...
+                        </div>
+                        <!--end::Display range-->
+
+                        <i class="ki-duotone ki-calendar-8 fs-1 ms-2 me-0"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span></i>
+                    </div>
+                    <!--end::Daterangepicker-->
+                </div>
+                <!--end::Toolbar-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-3 pb-4">
+                <div id="RentalsPerDay" style="height: 350px;"></div>
+            </div>
+            <!--end: Card Body-->
+        </div>
+        <!--end::Table widget 13-->
+    </div>
+    <!--end::Col-->
+    <!--begin::Col-->
+    <div class="col-xl-4">
+
+        <!--begin::Chart Widget 34-->
+        <div class="card card-flush h-xl-100">
+            <!--begin::Header-->
+            <div class="card-header pt-5 mb-6">
+                <!--begin::Title-->
+                <h3 class="card-title align-items-start flex-column">
+
+                    <span class="card-label fw-bold text-gray-800">Subscribers</span>
+                    <span class="fs-6 fw-semibold text-gray-400">Per City</span>
+                </h3>
+                <!--end::Title-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body py-0 px-0">
+                <div class="d-flex flex-center me-5 pt-2">
+                    <canvas id="SubscribersPerCity" class="mh-400px"></canvas>
+                </div>
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Chart Widget 34-->
+    </div>
+    <!--end::Col-->
+</div>
+<!--end::Row-->
+@section Scripts {
+    <script src="~/js/dashboard.js" asp-append-version="true"></script>
+}

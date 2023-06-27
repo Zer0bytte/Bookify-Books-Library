@@ -1,0 +1,66 @@
+﻿@model DelayedRentalsViewModel
+
+@if (Model.DelayedRentals is not null)
+{
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <span>Delayed Rentals</span>
+            </div>
+            @if (Model.DelayedRentals.Any())
+            {
+                <div class="card-toolbar">
+                    <a class="btn btn-light-success" asp-action="ExportDelayedRentalsToExcel">
+                        <i class="bi bi-file-earmark-excel-fill"></i>
+                        Export to excel
+                    </a>
+
+                    <a class="btn btn-light-danger" asp-action="ExportDelayedRentalsToPDF">
+                        <i class="bi bi-filetype-pdf"></i>
+                        Export to pdf
+                    </a>
+                </div>
+            }
+        </div>
+        <div class="card-body">
+            @if (Model.DelayedRentals.Any())
+            {
+                <table id="Books" class="table table-row-dashed table-row-gray-300 gy-2 align-middle">
+                    <thead>
+                        <tr class="fw-bold fs-6 text-white bg-black">
+                            <th class="ps-2">Subscriber Id</th>
+                            <th>Subscriber Name</th>
+                            <th>Subscriber Phone</th>
+                            <th>Book Title</th>
+                            <th>Book Serial</th>
+                            <th>Rental Date</th>
+                            <th>End Date</th>
+                            <th>Extended On</th>
+                            <th>Delay in days</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var book in Model.DelayedRentals)
+                        {
+                            <tr>
+                                <td>@book.SubscriberId</td>
+                                <td>@book.SubscriberName</td>
+                                <td>@book.SubscriberPhone</td>
+                                <td>@book.BookTitle</td>
+                                <td>@book.BookSerial</td>
+                                <td>@book.RentalDate</td>
+                                <td>@book.EndDate.ToString("dd MMM, yyyy")</td>
+                                <td>@book.ExtendedOn</td>
+                                <td>@book.DelayInDays</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h5>No books where found</h5>
+            }
+        </div>
+    </div>
+}

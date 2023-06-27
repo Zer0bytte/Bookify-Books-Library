@@ -1,0 +1,37 @@
+﻿@model List<DelayedRentaReportItemViewModel>
+
+@{
+    Layout = "_ReportsLayout";
+}
+
+<table id="data">
+    <thead>
+        <tr>
+            <th class="ps-2">Subscriber Id</th>
+            <th>Subscriber Name</th>
+            <th>Subscriber Phone</th>
+            <th>Book Title</th>
+            <th>Book Serial</th>
+            <th>Rental Date</th>
+            <th>End Date</th>
+            <th>Extended On</th>
+            <th>Delay in days</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var copy in Model)
+        {
+            <tr>
+                <td>@copy.SubscriberId</td>
+                <td>@copy.SubscriberName</td>
+                <td>@copy.SubscriberPhone</td>
+                <td>@copy.BookTitle</td>
+                <td>@copy.BookSerial</td>
+                <td>@copy.RentalDate</td>
+                <td>@copy.EndDate.ToString("dd MMM, yyyy")</td>
+                <td>@copy.ExtendedOn</td>
+                <td>@copy.DelayInDays</td>
+            </tr>
+        }
+    </tbody>
+</table>
