@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using Bookify.Web.Extensions;
+using System.Security.Claims;
 
 namespace Bookify.Web.Controllers
 {
@@ -32,14 +33,13 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create(AuthorFormViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
             var author = _mapper.Map<Author>(model);
-            author.CreatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            author.CreatedById = User.GetUserId();
 
             _context.Add(author);
             _context.SaveChanges();
@@ -64,7 +64,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Edit(AuthorFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -76,7 +75,7 @@ namespace Bookify.Web.Controllers
                 return NotFound();
 
             author = _mapper.Map(model, author);
-            author.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            author.LastUpdatedById = User.GetUserId();
             author.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();
@@ -87,7 +86,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult ToggleStatus(int id)
         {
             var author = _context.Authors.Find(id);
@@ -96,7 +94,7 @@ namespace Bookify.Web.Controllers
                 return NotFound();
 
             author.IsDeleted = !author.IsDeleted;
-            author.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            author.LastUpdatedById = User.GetUserId();
             author.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();

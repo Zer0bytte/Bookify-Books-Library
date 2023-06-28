@@ -65,7 +65,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create(RentalFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -143,7 +142,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Edit(RentalFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -175,7 +173,7 @@ namespace Bookify.Web.Controllers
                 return View("NotAllowedRental", rentalsError);
 
             rental.RentalCopies = copies;
-            rental.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            rental.LastUpdatedById = User.GetUserId();
             rental.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();
@@ -212,7 +210,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Return(RentalReturnFormViewModel model)
         {
             var rental = _context.Rentals
@@ -288,7 +285,7 @@ namespace Bookify.Web.Controllers
             if (isUpdated)
             {
                 rental.LastUpdatedOn = DateTime.Now;
-                rental.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+                rental.LastUpdatedById = User.GetUserId();
                 rental.PenaltyPaid = model.PenaltyPaid;
 
                 _context.SaveChanges();
@@ -298,7 +295,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult GetCopyDetails(SearchFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -326,7 +322,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult MarkAsDeleted(int id)
         {
             var rental = _context.Rentals.Find(id);
@@ -336,7 +331,7 @@ namespace Bookify.Web.Controllers
 
             rental.IsDeleted = true;
             rental.LastUpdatedOn = DateTime.Now;
-            rental.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            rental.LastUpdatedById = User.GetUserId();
 
             _context.SaveChanges();
 

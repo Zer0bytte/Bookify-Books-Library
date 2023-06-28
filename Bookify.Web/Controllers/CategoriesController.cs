@@ -30,14 +30,13 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create(CategoryFormViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
             var category = _mapper.Map<Category>(model);
-            category.CreatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            category.CreatedById = User.GetUserId();
 
             _context.Add(category);
             _context.SaveChanges();
@@ -62,7 +61,6 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Edit(CategoryFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -74,7 +72,7 @@
                 return NotFound();
 
             category = _mapper.Map(model, category);
-            category.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            category.LastUpdatedById = User.GetUserId();
             category.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();
@@ -85,7 +83,6 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult ToggleStatus(int id)
         {
             var category = _context.Categories.Find(id);
@@ -94,7 +91,7 @@
                 return NotFound();
 
             category.IsDeleted = !category.IsDeleted;
-            category.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            category.LastUpdatedById = User.GetUserId();
             category.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();

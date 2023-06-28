@@ -48,6 +48,7 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
+        [IgnoreAntiforgeryToken]
         public IActionResult GetBooks()
         {
             var skip = int.Parse(Request.Form["start"]);
@@ -102,7 +103,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BookFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -142,7 +142,7 @@ namespace Bookify.Web.Controllers
 				//book.ImagePublicId = result.PublicId;
 			}
 
-			book.CreatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+			book.CreatedById = User.GetUserId();
 
             foreach (var category in model.SelectedCategories)
                 book.Categories.Add(new BookCategory { CategoryId = category });
@@ -169,7 +169,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(BookFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -229,7 +228,7 @@ namespace Bookify.Web.Controllers
             }
 
             book = _mapper.Map(model, book);
-            book.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            book.LastUpdatedById = User.GetUserId();
             book.LastUpdatedOn = DateTime.Now;
             //book.ImageThumbnailUrl = GetThumbnailUrl(book.ImageUrl!);
             //book.ImagePublicId = imagePublicId;
@@ -247,7 +246,6 @@ namespace Bookify.Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult ToggleStatus(int id)
         {
             var book = _context.Books.Find(id);
@@ -256,7 +254,7 @@ namespace Bookify.Web.Controllers
                 return NotFound();
 
             book.IsDeleted = !book.IsDeleted;
-            book.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            book.LastUpdatedById = User.GetUserId();
             book.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();

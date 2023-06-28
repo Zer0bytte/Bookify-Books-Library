@@ -1,4 +1,6 @@
-﻿namespace Bookify.Web.Controllers
+﻿using Bookify.Web.Extensions;
+
+namespace Bookify.Web.Controllers
 {
     [Authorize(Roles = AppRoles.Archive)]
     public class BookCopiesController : Controller
@@ -30,7 +32,6 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create(BookCopyFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -71,7 +72,6 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Edit(BookCopyFormViewModel model)
         {
             if (!ModelState.IsValid)
@@ -84,7 +84,7 @@
 
             copy.EditionNumber = model.EditionNumber;
             copy.IsAvailableForRental = copy.Book!.IsAvailableForRental && model.IsAvailableForRental;
-            copy.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            copy.LastUpdatedById = User.GetUserId();
             copy.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();
@@ -109,7 +109,6 @@
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult ToggleStatus(int id)
         {
             var copy = _context.BookCopies.Find(id);
@@ -118,7 +117,7 @@
                 return NotFound();
 
             copy.IsDeleted = !copy.IsDeleted;
-            copy.LastUpdatedById = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            copy.LastUpdatedById = User.GetUserId();
             copy.LastUpdatedOn = DateTime.Now;
 
             _context.SaveChanges();

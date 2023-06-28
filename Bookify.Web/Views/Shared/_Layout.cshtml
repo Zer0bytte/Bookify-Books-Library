@@ -8,7 +8,7 @@
     <title>@ViewData["Title"] - Bookify</title>
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-    <link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap">
     <!--end::Fonts-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link rel="stylesheet" href="~/assets/css/plugins.bundle.css" type="text/css" />
@@ -23,6 +23,14 @@
     <!--begin::Theme mode setup on page load-->
     <script>var defaultThemeMode = "light"; var themeMode; if (document.documentElement) { if (document.documentElement.hasAttribute("data-theme-mode")) { themeMode = document.documentElement.getAttribute("data-theme-mode"); } else { if (localStorage.getItem("data-theme") !== null) { themeMode = localStorage.getItem("data-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-theme", themeMode); }</script>
     <!--end::Theme mode setup on page load-->
+    <!--begin:: NoScript-->
+    <noscript>
+        <div class="position-fixed h-100 w-100 bg-white text-center pt-20" style="z-index:3000000000;">
+            <h1 class="text-danger">Javascript is disabled</h1>
+            <p class="pt-3 text-muted">Please enable javascript and refresh the page!</p>
+        </div>
+    </noscript>
+    <!--end:: NoScript-->
     <!--begin:: page loader-->
     <div class="page-loader">
         <span class="spinner-border text-primary" role="status">
