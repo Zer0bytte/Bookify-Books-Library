@@ -1,4 +1,5 @@
-﻿using UoN.ExpressiveAnnotations.NetCore.Attributes;
+﻿using Bookify.Domain.Consts;
+using UoN.ExpressiveAnnotations.NetCore.Attributes;
 
 namespace Bookify.Web.Core.ViewModels
 {

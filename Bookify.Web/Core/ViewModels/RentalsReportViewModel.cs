@@ -1,4 +1,5 @@
-﻿using Bookify.Web.Core.Utilities;
+﻿using Bookify.Application.Common.Models;
+using Bookify.Domain.Entities;
 
 namespace Bookify.Web.Core.ViewModels
 {

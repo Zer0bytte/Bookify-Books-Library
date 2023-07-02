@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bookify.Infrastructure.Persistance;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bookify.Web.Controllers
 {
     [Authorize]
     public class DashboardController : Controller
     {
-        private readonly ApplicationDbContext _context;
+                private readonly IApplicationDBContext _context;
         private readonly IMapper _mapper;
 
         public DashboardController(ApplicationDbContext context, IMapper mapper)

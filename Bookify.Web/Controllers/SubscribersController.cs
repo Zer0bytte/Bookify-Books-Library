@@ -1,4 +1,7 @@
-﻿using Bookify.Web.Extensions;
+﻿using Bookify.Domain.Consts;
+using Bookify.Domain.Entities;
+using Bookify.Infrastructure.Persistance;
+using Bookify.Web.Extensions;
 using Hangfire;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -9,7 +12,7 @@ namespace Bookify.Web.Controllers
     [Authorize(Roles = AppRoles.Reception)]
     public class SubscribersController : Controller
     {
-        private readonly ApplicationDbContext _context;
+                private readonly IApplicationDBContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IDataProtector _dataProtector;
         private readonly IMapper _mapper;
@@ -125,7 +128,7 @@ namespace Bookify.Web.Controllers
 
             subscriber.Subscriptions.Add(subscription);
 
-            _context.Add(subscriber);
+            _context.Subscribers.Add(subscriber);
             _context.SaveChanges();
 
             //Send welcome email

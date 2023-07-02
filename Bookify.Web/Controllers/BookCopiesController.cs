@@ -1,11 +1,14 @@
-﻿using Bookify.Web.Extensions;
+﻿using Bookify.Domain.Consts;
+using Bookify.Domain.Entities;
+using Bookify.Infrastructure.Persistance;
+using Bookify.Web.Extensions;
 
 namespace Bookify.Web.Controllers
 {
     [Authorize(Roles = AppRoles.Archive)]
     public class BookCopiesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+                private readonly IApplicationDBContext _context;
         private readonly IMapper _mapper;
 
         public BookCopiesController(ApplicationDbContext context, IMapper mapper)

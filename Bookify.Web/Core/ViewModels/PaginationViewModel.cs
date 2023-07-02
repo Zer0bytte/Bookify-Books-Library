@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
+﻿using Bookify.Domain.Enums;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Bookify.Web.Core.ViewModels
 {

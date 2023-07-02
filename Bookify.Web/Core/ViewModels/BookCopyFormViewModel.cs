@@ -1,4 +1,6 @@
-﻿namespace Bookify.Web.Core.ViewModels
+﻿using Bookify.Domain.Consts;
+
+namespace Bookify.Web.Core.ViewModels
 {
     public class BookCopyFormViewModel
     {

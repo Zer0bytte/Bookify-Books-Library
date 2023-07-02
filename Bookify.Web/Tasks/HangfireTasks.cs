@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Bookify.Domain.Consts;
+using Bookify.Infrastructure.Persistance;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 
 namespace Bookify.Web.Tasks
 {
     public class HangfireTasks
     {
-        private readonly ApplicationDbContext _context;
+                private readonly IApplicationDBContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IWhatsAppClient _whatsAppClient;
 

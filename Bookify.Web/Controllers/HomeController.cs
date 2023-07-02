@@ -1,4 +1,5 @@
-﻿using HashidsNet;
+﻿using Bookify.Infrastructure.Persistance;
+using HashidsNet;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -9,7 +10,7 @@ namespace Bookify.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context;
+                private readonly IApplicationDBContext _context;
         private readonly IMapper _mapper;
         private readonly IHashids _hashIds;
 

@@ -1,4 +1,7 @@
-﻿using Bookify.Web.Extensions;
+﻿using Bookify.Domain.Consts;
+using Bookify.Domain.Entities;
+using Bookify.Infrastructure.Persistance;
+using Bookify.Web.Extensions;
 using System.Security.Claims;
 
 namespace Bookify.Web.Controllers
@@ -6,7 +9,7 @@ namespace Bookify.Web.Controllers
     [Authorize(Roles = AppRoles.Archive)]
     public class AuthorsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+                private readonly IApplicationDBContext _context;
         private readonly IMapper _mapper;
 
         public AuthorsController(ApplicationDbContext context, IMapper mapper)
@@ -41,7 +44,7 @@ namespace Bookify.Web.Controllers
             var author = _mapper.Map<Author>(model);
             author.CreatedById = User.GetUserId();
 
-            _context.Add(author);
+            _context.Authors.Add(author);
             _context.SaveChanges();
 
             var viewModel = _mapper.Map<AuthorViewModel>(author);

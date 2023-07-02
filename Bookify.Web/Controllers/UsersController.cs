@@ -9,6 +9,8 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text;
 using Bookify.Web.Extensions;
+using Bookify.Domain.Entities;
+using Bookify.Domain.Consts;
 
 namespace Bookify.Web.Controllers
 {

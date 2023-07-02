@@ -1,5 +1,7 @@
-﻿using Bookify.Web.Core.Enums;
-using Bookify.Web.Core.Models;
+﻿using Bookify.Domain.Consts;
+using Bookify.Domain.Entities;
+using Bookify.Domain.Enums;
+using Bookify.Infrastructure.Persistance;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +10,7 @@ namespace Bookify.Web.Controllers
     [Authorize(Roles = AppRoles.Reception)]
     public class RentalsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+                private readonly IApplicationDBContext _context;
         private readonly IDataProtector _dataProtector;
         private readonly IMapper _mapper;
 

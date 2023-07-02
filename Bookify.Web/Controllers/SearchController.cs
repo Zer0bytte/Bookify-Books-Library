@@ -1,4 +1,5 @@
-﻿using HashidsNet;
+﻿using Bookify.Infrastructure.Persistance;
+using HashidsNet;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +8,7 @@ namespace Bookify.Web.Controllers
     public class SearchController : Controller
     {
         private readonly IHashids _hashIds;
-        private readonly ApplicationDbContext _context;
+                private readonly IApplicationDBContext _context;
         private readonly IMapper _mapper;
 
         public SearchController(ApplicationDbContext context,

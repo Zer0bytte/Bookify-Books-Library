@@ -1,5 +1,8 @@
-﻿using Bookify.Web.Core.Models;
-using Bookify.Web.Core.Utilities;
+﻿using Bookify.Application.Common.Models;
+using Bookify.Domain.Consts;
+using Bookify.Domain.Entities;
+using Bookify.Domain.Enums;
+using Bookify.Infrastructure.Persistance;
 using Bookify.Web.Extensions;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
@@ -14,7 +17,7 @@ namespace Bookify.Web.Controllers
     [Authorize(Roles = AppRoles.Admin)]
     public class ReportsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+                private readonly IApplicationDBContext _context;
         private readonly IWebHostEnvironment _webHost;
         private readonly string _logoPath;
         private readonly int _sheetStartRow = 5;

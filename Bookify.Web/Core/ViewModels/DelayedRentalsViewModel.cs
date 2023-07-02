@@ -1,6 +1,4 @@
-﻿using Bookify.Web.Core.Utilities;
-
-namespace Bookify.Web.Core.ViewModels
+﻿namespace Bookify.Web.Core.ViewModels
 {
     public class DelayedRentalsViewModel
     {
