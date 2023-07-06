@@ -1,4 +1,7 @@
-﻿namespace Bookify.Infrastructure.Persistance;
+﻿using Bookify.Infrastructure.Persistance.EntityConfigurations;
+using System.Reflection;
+
+namespace Bookify.Infrastructure.Persistance;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDBContext
 {
@@ -23,15 +26,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
         builder.HasSequence<int>("SerialNumber", schema: "shared")
             .StartsAt(1000001);
 
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         builder.Entity<BookCopy>()
             .Property(e => e.SerialNumber)
             .HasDefaultValueSql("NEXT VALUE FOR shared.SerialNumber");
-
-        builder.Entity<BookCategory>().HasKey(e => new { e.BookId, e.CategoryId });
-        builder.Entity<RentalCopy>().HasKey(e => new { e.RentalId, e.BookCopyId });
-        builder.Entity<Rental>().HasQueryFilter(e => !e.IsDeleted);
-        builder.Entity<RentalCopy>().HasQueryFilter(e => !e.Rental!.IsDeleted);
-
         var cascadeFKs = builder.Model.GetEntityTypes()
             .SelectMany(t => t.GetForeignKeys())
             .Where(fk => fk.DeleteBehavior == DeleteBehavior.Cascade && !fk.IsOwnership);
