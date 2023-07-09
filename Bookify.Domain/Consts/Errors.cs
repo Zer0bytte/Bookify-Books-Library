@@ -3,8 +3,8 @@
     public static class Errors
     {
         public const string RequiredField = "Required field";
-        public const string MaxLength = "Length cannot be more than {1} characters";
-        public const string MaxMinLength = "The {0} must be at least {2} and at max {1} characters long.";
+        public const string MaxLength = "Length cannot be more than {MaxLength} characters";
+        public const string MaxMinLength = "The {PropertyName} must be at least {MinLength} and at max {MaxLength} characters long.";
         public const string Duplicated = "Another record with the same {0} is already exists!";
         public const string DuplicatedBook = "Book with the same title is already exists with the same author!";
         public const string NotAllowedExtension = "Only .png, .jpg, .jpeg files are allowed!";

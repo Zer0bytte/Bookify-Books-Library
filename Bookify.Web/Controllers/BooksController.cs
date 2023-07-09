@@ -5,6 +5,7 @@ using Bookify.Infrastructure.Persistance;
 using Bookify.Web.Filters;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using NuGet.Packaging.Signing;
@@ -12,6 +13,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Security.Cryptography;
 
 namespace Bookify.Web.Controllers
 {
@@ -23,13 +25,14 @@ namespace Bookify.Web.Controllers
         private readonly IMapper _mapper;
         private readonly Cloudinary _cloudinary;
         private readonly IImageService _imageService;
+        private readonly IValidator<BookFormViewModel> _validator;
 
         private List<string> _allowedExtensions = new() { ".jpg", ".jpeg", ".png" };
         private int _maxAllowedSize = 2097152;
 
         public BooksController(ApplicationDbContext context, IMapper mapper,
             IWebHostEnvironment webHostEnvironment, IOptions<CloudinarySettings> cloudinary,
-            IImageService imageService)
+            IImageService imageService, IValidator<BookFormViewModel> validator)
         {
             _context = context;
             _mapper = mapper;
@@ -44,6 +47,7 @@ namespace Bookify.Web.Controllers
 
             //_cloudinary = new Cloudinary(account);
             _imageService = imageService;
+            _validator = validator;
         }
 
         public IActionResult Index()
@@ -109,8 +113,9 @@ namespace Bookify.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(BookFormViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View("Form", PopulateViewModel(model));
+            var validationResult = _validator.Validate(model);
+            if (!validationResult.IsValid)
+                return BadRequest();
 
             var book = _mapper.Map<Book>(model);
 
@@ -175,6 +180,10 @@ namespace Bookify.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(BookFormViewModel model)
         {
+            var validationResult = _validator.Validate(model);
+            if (!validationResult.IsValid)
+                validationResult.AddToModelState(ModelState);
+
             if (!ModelState.IsValid)
                 return View("Form", PopulateViewModel(model));
 

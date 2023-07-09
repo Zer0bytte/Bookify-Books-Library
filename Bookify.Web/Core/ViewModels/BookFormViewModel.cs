@@ -8,7 +8,6 @@ namespace Bookify.Web.Core.ViewModels
     {
         public int Id { get; set; }
 
-        [MaxLength(500, ErrorMessage = Errors.MaxLength)]
         [Remote("AllowItem", null!, AdditionalFields = "Id,AuthorId", ErrorMessage = Errors.Duplicated)]
         public string Title { get; set; } = null!;
 
@@ -18,7 +17,6 @@ namespace Bookify.Web.Core.ViewModels
 
         public IEnumerable<SelectListItem>? Authors { get; set; }
 
-        [MaxLength(200, ErrorMessage = Errors.MaxLength)]
         public string Publisher { get; set; } = null!;
 
         [Display(Name = "Publishing Date")]
@@ -30,7 +28,6 @@ namespace Bookify.Web.Core.ViewModels
         public string? ImageUrl { get; set; }
         public string? ImageThumbnailUrl { get; set; }
 
-        [MaxLength(50, ErrorMessage = Errors.MaxLength)]
         public string Hall { get; set; } = null!;
 
         [Display(Name = "Is available for rental?")]

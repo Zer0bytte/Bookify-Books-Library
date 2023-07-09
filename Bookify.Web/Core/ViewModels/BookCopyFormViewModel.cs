@@ -10,8 +10,7 @@ namespace Bookify.Web.Core.ViewModels
         [Display(Name = "Is available for rental?")]
         public bool IsAvailableForRental { get; set; }
 
-        [Display(Name = "Edition Number"),
-            Range(1,1000, ErrorMessage = Errors.InvalidRange)]
+        [Display(Name = "Edition Number")]
         public int EditionNumber { get; set; }
 
         public bool ShowRentalInput { get; set; }

@@ -9,13 +9,15 @@ namespace Bookify.Web.Controllers
     [Authorize(Roles = AppRoles.Archive)]
     public class AuthorsController : Controller
     {
-                private readonly IApplicationDBContext _context;
+        private readonly IApplicationDBContext _context;
         private readonly IMapper _mapper;
+        private readonly IValidator<AuthorFormViewModel> _validator;
 
-        public AuthorsController(ApplicationDbContext context, IMapper mapper)
+        public AuthorsController(ApplicationDbContext context, IMapper mapper, IValidator<AuthorFormViewModel> validator)
         {
             _context = context;
             _mapper = mapper;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -38,7 +40,8 @@ namespace Bookify.Web.Controllers
         [HttpPost]
         public IActionResult Create(AuthorFormViewModel model)
         {
-            if (!ModelState.IsValid)
+            var validationResult = _validator.Validate(model);
+            if (!validationResult.IsValid)
                 return BadRequest();
 
             var author = _mapper.Map<Author>(model);
@@ -69,7 +72,8 @@ namespace Bookify.Web.Controllers
         [HttpPost]
         public IActionResult Edit(AuthorFormViewModel model)
         {
-            if (!ModelState.IsValid)
+            var validationResult = _validator.Validate(model);
+            if (!validationResult.IsValid)
                 return BadRequest();
 
             var author = _context.Authors.Find(model.Id);

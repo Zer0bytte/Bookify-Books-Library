@@ -2,19 +2,24 @@
 using Bookify.Domain.Entities;
 using Bookify.Infrastructure.Persistance;
 using Bookify.Web.Extensions;
+using FluentValidation;
 
 namespace Bookify.Web.Controllers
 {
     [Authorize(Roles = AppRoles.Archive)]
     public class BookCopiesController : Controller
     {
-                private readonly IApplicationDBContext _context;
+        private readonly IApplicationDBContext _context;
         private readonly IMapper _mapper;
+        private readonly IValidator<BookCopyFormViewModel> _validator;
 
-        public BookCopiesController(ApplicationDbContext context, IMapper mapper)
+        public BookCopiesController(ApplicationDbContext context,
+            IMapper mapper,
+            IValidator<BookCopyFormViewModel> validator)
         {
             _context = context;
             _mapper = mapper;
+            _validator = validator;
         }
 
         [AjaxOnly]
@@ -25,8 +30,8 @@ namespace Bookify.Web.Controllers
             if (book is null)
                 return NotFound();
 
-            var viewModel = new BookCopyFormViewModel 
-            { 
+            var viewModel = new BookCopyFormViewModel
+            {
                 BookId = bookId,
                 ShowRentalInput = book.IsAvailableForRental
             };
@@ -37,7 +42,8 @@ namespace Bookify.Web.Controllers
         [HttpPost]
         public IActionResult Create(BookCopyFormViewModel model)
         {
-            if (!ModelState.IsValid)
+            var validationResult = _validator.Validate(model);
+            if (!validationResult.IsValid)
                 return BadRequest();
 
             var book = _context.Books.Find(model.BookId);
@@ -77,8 +83,10 @@ namespace Bookify.Web.Controllers
         [HttpPost]
         public IActionResult Edit(BookCopyFormViewModel model)
         {
-            if (!ModelState.IsValid)
+            var validationResult = _validator.Validate(model);
+            if (!validationResult.IsValid)
                 return BadRequest();
+
 
             var copy = _context.BookCopies.Include(c => c.Book).SingleOrDefault(c => c.Id == model.Id);
 

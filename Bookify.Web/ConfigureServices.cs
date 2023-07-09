@@ -1,5 +1,7 @@
 ﻿using Bookify.Web.Core.Mapping;
 using Bookify.Web.Helpers;
+using Bookify.Web.Validators;
+using FluentValidation.AspNetCore;
 using Hangfire;
 using HashidsNet;
 using Microsoft.AspNetCore.DataProtection;
@@ -42,6 +44,10 @@ namespace Bookify.Web
 
             services.AddControllersWithViews();
             services.AddViewToHTML();
+
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
 
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
             services.Configure<CloudinarySettings>(builder.Configuration.GetSection(nameof(CloudinarySettings)));

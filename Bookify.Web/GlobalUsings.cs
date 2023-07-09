@@ -17,3 +17,4 @@ global using WhatsAppCloudApi;
 global using WhatsAppCloudApi.Services;
 global using Bookify.Application.Common.Models;
 global using Bookify.Application.Common.Interfaces;
+global using FluentValidation;

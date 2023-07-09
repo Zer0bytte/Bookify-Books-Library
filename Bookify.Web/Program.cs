@@ -11,8 +11,8 @@ using Serilog.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddWebServices(builder);
+builder.Services.AddInfrastructureServices(builder.Configuration)
+    .AddWebServices(builder);
 
 //Serilog
 Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
